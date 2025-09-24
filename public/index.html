@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Xếp Từ cùng cô Hà nha</title>
+  <title>Game Xếp Từ</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -22,7 +22,6 @@
     .home-btn {
       display: inline-block;
       margin-top: 20px;
-      margin-bottom: -20px;
       padding: 10px 20px;
       font-size: 16px;
       border: none;
@@ -41,22 +40,32 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 20px;
       padding: 40px 20px;
     }
     .side-img {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
       width: 200px;
       max-height: 300px;
       object-fit: contain;
+      z-index: 1;
+    }
+    .side-left {
+      left: 20px;
+    }
+    .side-right {
+      right: 20px;
     }
     .container {
-      flex: 1;
       max-width: 600px;
+      margin: auto;
       background: rgba(255, 255, 255, 0.95);
       padding: 40px;
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      animation: fadeIn 1s ease;
+      animation: fadeIn 0.5s ease;
+      z-index: 2;
     }
     @keyframes fadeIn {
       from {opacity: 0; transform: translateY(20px);}
@@ -73,12 +82,6 @@
       margin: 25px 0;
       letter-spacing: 8px;
       color: #ff5722;
-      animation: bounce 0.8s ease;
-    }
-    @keyframes bounce {
-      0% {transform: scale(0.8);}
-      50% {transform: scale(1.1);}
-      100% {transform: scale(1);}
     }
     input {
       padding: 12px;
@@ -115,26 +118,10 @@
       font-size: 20px;
       font-weight: 600;
     }
-    .correct {
-      color: #27ae60;
-      animation: correctAnim 0.5s ease;
-    }
-    @keyframes correctAnim {
-      from {transform: scale(0.8);}
-      to {transform: scale(1);}
-    }
-    .wrong {
-      color: #e74c3c;
-      animation: wrongAnim 0.5s ease;
-    }
-    @keyframes wrongAnim {
-      0% {transform: rotate(-5deg);}
-      50% {transform: rotate(5deg);}
-      100% {transform: rotate(0);}
-    }
+    .correct { color: #27ae60; }
+    .wrong { color: #e74c3c; }
     @media (max-width: 768px) {
       .side-img {display: none;}
-      .wrapper {padding: 20px;}
     }
   </style>
 </head>
@@ -142,9 +129,11 @@
   <!-- Nút Trang chủ -->
   <a href="https://homepage-gray-omega.vercel.app/" class="home-btn">🏠 Trang chủ</a>
 
+  <!-- Ảnh chibi cố định -->
+  <img src="images/coha-left.png" alt="Cô Hà trái" class="side-img side-left">
+  <img src="images/coha-right.png" alt="Cô Hà phải" class="side-img side-right">
+
   <div class="wrapper">
-    <img src="images/coha-left.png" alt="Cô Hà trái" class="side-img">
-    
     <div class="container">
       <h1>🎮 Game Xếp Từ 🎮</h1>
       <div id="scramble" class="scramble"></div>
@@ -156,8 +145,6 @@
       <div id="message" class="message"></div>
       <button id="nextBtn" style="display:none;" onclick="nextWord()">Tiếp theo ➡️</button>
     </div>
-
-    <img src="images/coha-right.png" alt="Cô Hà phải" class="side-img">
   </div>
 
   <script src="words.js"></script>
@@ -165,6 +152,7 @@
   <script>
     let currentWord = "";
     let shuffled = "";
+    let answered = false; // trạng thái đã hiện đáp án hay chưa
 
     function shuffleWord(word) {
       const chars = word.replace(/\s/g, "").split("");
@@ -185,6 +173,7 @@
       currentWord = words[Math.floor(Math.random() * words.length)];
       shuffled = shuffleWord(currentWord);
       document.getElementById("scramble").textContent = shuffled;
+      answered = false;
     }
 
     function checkAnswer() {
@@ -195,6 +184,7 @@
         msg.textContent = "🎉 Chính xác!";
         msg.className = "message correct";
         document.getElementById("nextBtn").style.display = "inline-block";
+        answered = true;
       } else {
         msg.textContent = "❌ Sai rồi, thử lại.";
         msg.className = "message wrong";
@@ -206,12 +196,17 @@
       msg.textContent = "😢 Đáp án đúng là: " + currentWord;
       msg.className = "message wrong";
       document.getElementById("nextBtn").style.display = "inline-block";
+      answered = true;
     }
 
-    // Bắt sự kiện Enter để xác nhận
+    // Enter để xác nhận hoặc sang câu mới
     document.getElementById("answer").addEventListener("keydown", function(e) {
       if (e.key === "Enter") {
-        checkAnswer();
+        if (answered) {
+          nextWord();
+        } else {
+          checkAnswer();
+        }
       }
     });
 
