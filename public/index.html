@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Xếp Từ</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 100px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #6a11cb;
+    }
+    .scramble {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 20px 0;
+      letter-spacing: 4px;
+      color: #ff5722;
+    }
+    input {
+      padding: 10px;
+      font-size: 18px;
+      width: 80%;
+      margin: 10px 0;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #6a11cb;
+      color: white;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #2575fc;
+    }
+    .message {
+      margin: 15px 0;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .correct { color: green; }
+    .wrong { color: red; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎮 Game Xếp Từ 🎮</h1>
+    <div id="scramble" class="scramble"></div>
+    <input type="text" id="answer" placeholder="Nhập từ đúng...">
+    <div>
+      <button onclick="checkAnswer()">Xác nhận</button>
+      <button onclick="giveUp()">Chịu thua</button>
+    </div>
+    <div id="message" class="message"></div>
+    <button id="nextBtn" style="display:none;" onclick="nextWord()">Tiếp theo ➡️</button>
+  </div>
+
+  <!-- import danh sách từ -->
+  <script src="words.js"></script>
+
+  <script>
+    let currentWord = "";
+    let shuffled = "";
+
+    function shuffleWord(word) {
+      const chars = word.replace(/\s/g, "").split("");
+      for (let i = chars.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [chars[i], chars[j]] = [chars[j], chars[i]];
+      }
+      return chars.join("/");
+    }
+
+    function nextWord() {
+      document.getElementById("message").textContent = "";
+      document.getElementById("nextBtn").style.display = "none";
+      document.getElementById("answer").value = "";
+
+      currentWord = words[Math.floor(Math.random() * words.length)];
+      shuffled = shuffleWord(currentWord);
+      document.getElementById("scramble").textContent = shuffled;
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById("answer").value.trim();
+      const msg = document.getElementById("message");
+
+      if (input.toLowerCase() === currentWord.toLowerCase()) {
+        msg.textContent = "🎉 Chính xác!";
+        msg.className = "message correct";
+        document.getElementById("nextBtn").style.display = "inline-block";
+      } else {
+        msg.textContent = "❌ Sai rồi, thử lại.";
+        msg.className = "message wrong";
+      }
+    }
+
+    function giveUp() {
+      const msg = document.getElementById("message");
+      msg.textContent = "😢 Đáp án đúng là: " + currentWord;
+      msg.className = "message wrong";
+      document.getElementById("nextBtn").style.display = "inline-block";
+    }
+
+    // Load câu đầu tiên khi mở trang
+    nextWord();
+  </script>
+</body>
+</html>
