@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Game Xếp Từ</title>
+  <title>Xếp Từ cùng cô Hà nha</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -139,7 +139,7 @@
   </style>
 </head>
 <body>
-  <!-- Nút Trang chủ ở trên cùng -->
+  <!-- Nút Trang chủ -->
   <a href="https://homepage-gray-omega.vercel.app/" class="home-btn">🏠 Trang chủ</a>
 
   <div class="wrapper">
@@ -178,7 +178,9 @@
     function nextWord() {
       document.getElementById("message").textContent = "";
       document.getElementById("nextBtn").style.display = "none";
-      document.getElementById("answer").value = "";
+      const inputBox = document.getElementById("answer");
+      inputBox.value = "";
+      inputBox.focus();
 
       currentWord = words[Math.floor(Math.random() * words.length)];
       shuffled = shuffleWord(currentWord);
@@ -206,6 +208,14 @@
       document.getElementById("nextBtn").style.display = "inline-block";
     }
 
+    // Bắt sự kiện Enter để xác nhận
+    document.getElementById("answer").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        checkAnswer();
+      }
+    });
+
+    // Load câu đầu tiên
     nextWord();
   </script>
 </body>
