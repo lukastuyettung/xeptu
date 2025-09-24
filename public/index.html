@@ -27,7 +27,7 @@
       font-size: 28px;
       font-weight: bold;
       margin: 20px 0;
-      letter-spacing: 4px;
+      letter-spacing: 6px;
       color: #ff5722;
     }
     input {
@@ -82,6 +82,7 @@
     let shuffled = "";
 
     function shuffleWord(word) {
+      // bỏ khoảng trắng để chỉ random chữ cái
       const chars = word.replace(/\s/g, "").split("");
       for (let i = chars.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -95,6 +96,7 @@
       document.getElementById("nextBtn").style.display = "none";
       document.getElementById("answer").value = "";
 
+      // chọn random từ trong words.js
       currentWord = words[Math.floor(Math.random() * words.length)];
       shuffled = shuffleWord(currentWord);
       document.getElementById("scramble").textContent = shuffled;
@@ -121,7 +123,7 @@
       document.getElementById("nextBtn").style.display = "inline-block";
     }
 
-    // Load câu đầu tiên khi mở trang
+    // load từ đầu tiên khi vào game
     nextWord();
   </script>
 </body>
