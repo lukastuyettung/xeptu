@@ -19,6 +19,24 @@
       50% {background-position: 100% 50%;}
       100% {background-position: 0% 50%;}
     }
+    .home-btn {
+      display: inline-block;
+      margin-top: 20px;
+      margin-bottom: -20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+    .home-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
     .wrapper {
       display: flex;
       align-items: center;
@@ -114,7 +132,6 @@
       50% {transform: rotate(5deg);}
       100% {transform: rotate(0);}
     }
-    /* Responsive: Ẩn ảnh 2 bên trên màn nhỏ */
     @media (max-width: 768px) {
       .side-img {display: none;}
       .wrapper {padding: 20px;}
@@ -122,6 +139,9 @@
   </style>
 </head>
 <body>
+  <!-- Nút Trang chủ ở trên cùng -->
+  <a href="https://homepage-gray-omega.vercel.app/" class="home-btn">🏠 Trang chủ</a>
+
   <div class="wrapper">
     <img src="images/coha-left.png" alt="Cô Hà trái" class="side-img">
     
@@ -140,7 +160,6 @@
     <img src="images/coha-right.png" alt="Cô Hà phải" class="side-img">
   </div>
 
-  <!-- import danh sách từ -->
   <script src="words.js"></script>
 
   <script>
