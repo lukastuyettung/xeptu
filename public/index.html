@@ -19,9 +19,21 @@
       50% {background-position: 100% 50%;}
       100% {background-position: 0% 50%;}
     }
+    .wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px 20px;
+    }
+    .side-img {
+      width: 200px;
+      max-height: 300px;
+      object-fit: contain;
+    }
     .container {
+      flex: 1;
       max-width: 600px;
-      margin: 100px auto;
       background: rgba(255, 255, 255, 0.95);
       padding: 40px;
       border-radius: 20px;
@@ -102,19 +114,30 @@
       50% {transform: rotate(5deg);}
       100% {transform: rotate(0);}
     }
+    /* Responsive: Ẩn ảnh 2 bên trên màn nhỏ */
+    @media (max-width: 768px) {
+      .side-img {display: none;}
+      .wrapper {padding: 20px;}
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🎮 Game Xếp Từ 🎮</h1>
-    <div id="scramble" class="scramble"></div>
-    <input type="text" id="answer" placeholder="Nhập từ đúng...">
-    <div>
-      <button onclick="checkAnswer()">Xác nhận</button>
-      <button onclick="giveUp()">Chịu thua</button>
+  <div class="wrapper">
+    <img src="images/coha-left.png" alt="Cô Hà trái" class="side-img">
+    
+    <div class="container">
+      <h1>🎮 Game Xếp Từ 🎮</h1>
+      <div id="scramble" class="scramble"></div>
+      <input type="text" id="answer" placeholder="Nhập từ đúng...">
+      <div>
+        <button onclick="checkAnswer()">Xác nhận</button>
+        <button onclick="giveUp()">Chịu thua</button>
+      </div>
+      <div id="message" class="message"></div>
+      <button id="nextBtn" style="display:none;" onclick="nextWord()">Tiếp theo ➡️</button>
     </div>
-    <div id="message" class="message"></div>
-    <button id="nextBtn" style="display:none;" onclick="nextWord()">Tiếp theo ➡️</button>
+
+    <img src="images/coha-right.png" alt="Cô Hà phải" class="side-img">
   </div>
 
   <!-- import danh sách từ -->
@@ -164,7 +187,6 @@
       document.getElementById("nextBtn").style.display = "inline-block";
     }
 
-    // load từ đầu tiên khi vào game
     nextWord();
   </script>
 </body>
