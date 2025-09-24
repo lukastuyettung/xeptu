@@ -22,6 +22,7 @@
     .home-btn {
       display: inline-block;
       margin-top: 20px;
+      margin-bottom: 10px;
       padding: 10px 20px;
       font-size: 16px;
       border: none;
@@ -41,35 +42,31 @@
       align-items: center;
       justify-content: center;
       padding: 40px 20px;
+      position: relative;
     }
     .side-img {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 200px;
-      max-height: 300px;
+      position: absolute;
+      top: 30%;
+      width: 160px;
+      max-height: 250px;
       object-fit: contain;
       z-index: 1;
     }
     .side-left {
-      left: 20px;
+      left: calc(50% - 400px);
     }
     .side-right {
-      right: 20px;
+      right: calc(50% - 400px);
     }
     .container {
-      max-width: 600px;
+      position: relative;
       margin: auto;
+      max-width: 600px;
       background: rgba(255, 255, 255, 0.95);
       padding: 40px;
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      animation: fadeIn 0.5s ease;
       z-index: 2;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
     }
     h1 {
       margin-bottom: 25px;
@@ -120,8 +117,8 @@
     }
     .correct { color: #27ae60; }
     .wrong { color: #e74c3c; }
-    @media (max-width: 768px) {
-      .side-img {display: none;}
+    @media (max-width: 900px) {
+      .side-img { display: none; }
     }
   </style>
 </head>
@@ -129,11 +126,11 @@
   <!-- Nút Trang chủ -->
   <a href="https://homepage-gray-omega.vercel.app/" class="home-btn">🏠 Trang chủ</a>
 
-  <!-- Ảnh chibi cố định -->
-  <img src="images/coha-left.png" alt="Cô Hà trái" class="side-img side-left">
-  <img src="images/coha-right.png" alt="Cô Hà phải" class="side-img side-right">
-
   <div class="wrapper">
+    <!-- Ảnh chibi -->
+    <img src="images/coha-left.png" alt="Cô Hà trái" class="side-img side-left">
+    <img src="images/coha-right.png" alt="Cô Hà phải" class="side-img side-right">
+
     <div class="container">
       <h1>🎮 Game Xếp Từ 🎮</h1>
       <div id="scramble" class="scramble"></div>
@@ -148,11 +145,10 @@
   </div>
 
   <script src="words.js"></script>
-
   <script>
     let currentWord = "";
     let shuffled = "";
-    let answered = false; // trạng thái đã hiện đáp án hay chưa
+    let answered = false;
 
     function shuffleWord(word) {
       const chars = word.replace(/\s/g, "").split("");
@@ -199,7 +195,7 @@
       answered = true;
     }
 
-    // Enter để xác nhận hoặc sang câu mới
+    // Enter: xác nhận hoặc qua câu tiếp
     document.getElementById("answer").addEventListener("keydown", function(e) {
       if (e.key === "Enter") {
         if (answered) {
@@ -210,7 +206,6 @@
       }
     });
 
-    // Load câu đầu tiên
     nextWord();
   </script>
 </body>
